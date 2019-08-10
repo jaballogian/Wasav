@@ -12,9 +12,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
@@ -22,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView oneDayUsageTextView, sevenDayUsageTextView;
     private DatabaseReference deviceReference;
-    private Double oneDayValue, sevenDayUsage, volume;
+    private Double oneDayValue, sevenDayUsage, volume, lastSevenDaysVolume;
     private String timeStamp, dayFromApp, monthFromApp, yearFromApp;
     private ArrayList<String> timeStampArrayList;
     private ArrayList<Double> oneDayUsageArrayList, volumeArrayList;
     private String[] splitterMinus, splitterSlash;
+    private int dayOfYearFromApp, dayOfYearLast7Days;
+//    private ArrayList<Calendar> convertedDateArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         timeStampArrayList = new ArrayList<String>();
         oneDayUsageArrayList = new ArrayList<Double>();
         volumeArrayList = new ArrayList<Double>();
+//        convertedDateArrayList = new ArrayList<Calendar>();
 
         //set font
         Calligrapher calligrapher = new Calligrapher(this);
@@ -47,11 +54,19 @@ public class MainActivity extends AppCompatActivity {
 
         //get today date
         Calendar now = Calendar.getInstance();
+        dayOfYearFromApp = now.get(Calendar.DAY_OF_YEAR);
         dayFromApp = String.valueOf(now.get(Calendar.DATE));
         monthFromApp = String.valueOf(now.get(Calendar.MONTH) + 1);
         yearFromApp = String.valueOf(now.get(Calendar.YEAR));
 
-        Log.d("today", "day " + dayFromApp + " month " + monthFromApp + " year " + yearFromApp);
+        //get last 7 days
+        Calendar last7Days = Calendar.getInstance();
+        last7Days.setTime(new Date());
+        last7Days.add(Calendar.DAY_OF_YEAR, -7);
+        dayOfYearLast7Days = last7Days.get(Calendar.DAY_OF_YEAR);
+        String sevenDaysBeforeDate1 = String.valueOf(last7Days.get(Calendar.DATE));
+        String sevenDaysBeforeDate2 = String.valueOf(last7Days.get(Calendar.MONTH) + 1);
+        String sevenDaysBeforeDate3 = String.valueOf(last7Days.get(Calendar.YEAR));
 
         //get data from Firebase
         deviceReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("Wasav-001");
@@ -68,23 +83,42 @@ public class MainActivity extends AppCompatActivity {
                     volumeArrayList.add(volume);
 
                     Log.d("testData", "time " + timeStamp + " volume " + volume);
-
-                    oneDayValue = 0.0;
-                    for(int i = 0; i < timeStampArrayList.size(); i++){
-
-                        Log.d("compare", "dayFromApp " + dayFromApp + " splitterDay + " + splitterDay(timeStampArrayList.get(i)) +
-                                " monthFromApp " + monthFromApp + " splitterMonth " + splitterMonth(timeStampArrayList.get(i)) +
-                                " yearFromApp " + yearFromApp + " splitterYear " + splitterYear(timeStampArrayList.get(i)));
-
-                        if(dayFromApp.equals(splitterDay(timeStampArrayList.get(i)))
-                                && monthFromApp.equals(splitterMonth(timeStampArrayList.get(i)))
-                                && yearFromApp.equals(splitterYear(timeStampArrayList.get(i)))){
-
-                            oneDayValue = oneDayValue + volumeArrayList.get(i);
-                        }
-                    }
-                    oneDayUsageTextView.setText(String.valueOf(oneDayValue));
                 }
+
+                oneDayValue = 0.0;
+                lastSevenDaysVolume = 0.0;
+                for(int i = 0; i < timeStampArrayList.size(); i++){
+
+                    //convert timeStamp from Firebase to date format
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd:MM:yyyy");
+                    Date d = null;
+                    try {
+                        d = formatter.parse(splitterDay(timeStampArrayList.get(i)) + ":" + splitterMonth(timeStampArrayList.get(i)) + ":" + splitterYear(timeStampArrayList.get(i)));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    Calendar convertedDate = Calendar.getInstance();
+                    convertedDate.setTime(d);
+                    int dayOfYearConvertedDate = convertedDate.get(Calendar.DAY_OF_YEAR);
+
+                    //compare
+                    if(dayOfYearConvertedDate == dayOfYearFromApp){
+
+                        oneDayValue = oneDayValue + volumeArrayList.get(i);
+                    }
+
+                    if(dayOfYearConvertedDate > dayOfYearLast7Days && dayOfYearConvertedDate <= dayOfYearFromApp){
+
+                        Log.d("compare", "dayOfYearLast7Days " + dayOfYearLast7Days + " dayOfYearConvertedDate " + dayOfYearConvertedDate + " dayOfYearFromApp " + dayOfYearFromApp);
+                        Log.d("testVolume", String.valueOf(volumeArrayList.get(i)));
+                        lastSevenDaysVolume = lastSevenDaysVolume + volumeArrayList.get(i);
+                    }
+
+                }
+                oneDayUsageTextView.setText(String.valueOf(oneDayValue));
+                sevenDayUsageTextView.setText(String.valueOf(lastSevenDaysVolume));
             }
 
             @Override
@@ -92,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     //get day from Firebase
@@ -101,8 +137,46 @@ public class MainActivity extends AppCompatActivity {
         splitterSlash = splitterMinus[0].split(":");
 
         String day;
+        if(splitterSlash[0].equals("01")){
 
-        day = String.valueOf(splitterSlash[0]);
+            day = "1";
+        }
+        else if(splitterSlash[0].equals("02")){
+
+            day = "2";
+        }
+        else if(splitterSlash[0].equals("03")){
+
+            day = "3";
+        }
+        else if(splitterSlash[0].equals("04")){
+
+            day = "4";
+        }
+        else if(splitterSlash[0].equals("05")){
+
+            day = "5";
+        }
+        else if(splitterSlash[0].equals("06")){
+
+            day = "6";
+        }
+        else if(splitterSlash[0].equals("07")){
+
+            day = "7";
+        }
+        else if(splitterSlash[0].equals("08")){
+
+            day = "8";
+        }
+        else if(splitterSlash[0].equals("09")){
+
+            day = "9";
+        }
+        else {
+
+            day = String.valueOf(splitterSlash[0]);
+        }
         return day;
     }
 
