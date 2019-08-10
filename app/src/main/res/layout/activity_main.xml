@@ -22,4 +22,9 @@
         android:textSize="18sp"
         android:textColor="@color/black"/>
 
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

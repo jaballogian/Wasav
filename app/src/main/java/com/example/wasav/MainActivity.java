@@ -1,5 +1,6 @@
 package com.example.wasav;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,20 +20,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.view.LineChartView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView oneDayUsageTextView, sevenDayUsageTextView;
     private DatabaseReference deviceReference;
-    private Double oneDayValue, sevenDayUsage, volume, lastSevenDaysVolume;
-    private String timeStamp, dayFromApp, monthFromApp, yearFromApp;
+    private Double oneDayValue, volume, lastSevenDaysVolume;
+    private String timeStamp;
     private ArrayList<String> timeStampArrayList;
-    private ArrayList<Double> oneDayUsageArrayList, volumeArrayList;
+    private ArrayList<Double> volumeArrayList;
     private String[] splitterMinus, splitterSlash;
     private int dayOfYearFromApp, dayOfYearLast7Days;
-//    private ArrayList<Calendar> convertedDateArrayList;
+    private LineChartView lineChartView;
+    private ArrayList yAxisValues, axisValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
         //initializing
         oneDayUsageTextView = (TextView) findViewById(R.id.oneDayUsageTextView);
         sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
+        lineChartView = findViewById(R.id.chart);
 
         timeStampArrayList = new ArrayList<String>();
-        oneDayUsageArrayList = new ArrayList<Double>();
         volumeArrayList = new ArrayList<Double>();
-//        convertedDateArrayList = new ArrayList<Calendar>();
+        yAxisValues = new ArrayList();
+        axisValues = new ArrayList();
 
         //set font
         Calligrapher calligrapher = new Calligrapher(this);
@@ -55,18 +66,12 @@ public class MainActivity extends AppCompatActivity {
         //get today date
         Calendar now = Calendar.getInstance();
         dayOfYearFromApp = now.get(Calendar.DAY_OF_YEAR);
-        dayFromApp = String.valueOf(now.get(Calendar.DATE));
-        monthFromApp = String.valueOf(now.get(Calendar.MONTH) + 1);
-        yearFromApp = String.valueOf(now.get(Calendar.YEAR));
 
         //get last 7 days
         Calendar last7Days = Calendar.getInstance();
         last7Days.setTime(new Date());
         last7Days.add(Calendar.DAY_OF_YEAR, -7);
         dayOfYearLast7Days = last7Days.get(Calendar.DAY_OF_YEAR);
-        String sevenDaysBeforeDate1 = String.valueOf(last7Days.get(Calendar.DATE));
-        String sevenDaysBeforeDate2 = String.valueOf(last7Days.get(Calendar.MONTH) + 1);
-        String sevenDaysBeforeDate3 = String.valueOf(last7Days.get(Calendar.YEAR));
 
         //get data from Firebase
         deviceReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("Wasav-001");
@@ -119,6 +124,41 @@ public class MainActivity extends AppCompatActivity {
                 }
                 oneDayUsageTextView.setText(String.valueOf(oneDayValue));
                 sevenDayUsageTextView.setText(String.valueOf(lastSevenDaysVolume));
+
+                for (int i = 0; i < timeStampArrayList.size(); i++) {
+                    axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + "/" + splitterMonth(timeStampArrayList.get(i)) + "/" + splitterYear(timeStampArrayList.get(i))));
+                }
+
+                for (int i = 0; i < volumeArrayList.size(); i++) {
+                    yAxisValues.add(new PointValue(i, volumeArrayList.get(i).floatValue()));
+                }
+
+                Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
+
+                List lines = new ArrayList();
+                lines.add(line);
+
+                LineChartData data = new LineChartData();
+                data.setLines(lines);
+
+                Axis axis = new Axis();
+                axis.setValues(axisValues);
+                axis.setTextSize(16);
+                axis.setTextColor(Color.parseColor("#03A9F4"));
+                data.setAxisXBottom(axis);
+
+                Axis yAxis = new Axis();
+                yAxis.setName("Volume in Liters");
+                yAxis.setTextColor(Color.parseColor("#03A9F4"));
+                yAxis.setTextSize(16);
+                data.setAxisYLeft(yAxis);
+
+                lineChartView.setLineChartData(data);
+                Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+                viewport.top = 110;
+                lineChartView.setMaximumViewport(viewport);
+                lineChartView.setCurrentViewport(viewport);
+
             }
 
             @Override
@@ -126,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     //get day from Firebase
