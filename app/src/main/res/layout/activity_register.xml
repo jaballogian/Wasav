@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ActivityRegister">
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/fullnameEditTextActivityRegister"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Fullname"-->
+            <!--android:inputType="text"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColorHint="@color/black"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/fullnameEditTextActivityRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fullname"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="18sp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"/>
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/phoneNumberEditTextActivityRegister"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Phone Number"-->
+            <!--android:inputType="number"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColorHint="@color/black"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/phoneNumberEditTextActivityRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="18sp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"/>
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/emailEditTextActivityRegister"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Email"-->
+            <!--android:inputType="textEmailAddress"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColorHint="@color/black"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/emailEditTextActivityRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="18sp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"/>
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/passwordEditTextActivityRegister"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Password"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:textColorHint="@color/black"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:textSize="18sp" />-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/passwordEditTextActivityRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerButtonActivityRegister"
+        android:text="Register"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="16sp"/>
+
+</LinearLayout>

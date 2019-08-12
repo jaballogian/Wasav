@@ -1,5 +1,6 @@
 package com.example.wasav;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +33,7 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity {
 
     private TextView oneDayUsageTextView, sevenDayUsageTextView;
     private DatabaseReference deviceReference;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         //set font
         Calligrapher calligrapher = new Calligrapher(this);
         calligrapher.setFont(this, "PRODUCT_SANS.ttf", true);
+
+        checkingUser();
 
         //get today date
         Calendar now = Calendar.getInstance();
@@ -277,4 +281,21 @@ public class MainActivity extends AppCompatActivity {
         String year = "20" + String.valueOf(splitterSlash[2]);
         return year;
     }
+
+    private void checkingUser(){
+
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+
+            moveToActivityLogIn();
+        }
+    }
+
+    private void moveToActivityLogIn(){
+
+        Intent toActivityLogIn = new Intent(this, ActivityLogin.class);
+        toActivityLogIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(toActivityLogIn);
+        finish();
+    }
+
 }
