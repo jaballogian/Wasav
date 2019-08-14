@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +47,7 @@ public class ActivityMain extends AppCompatActivity {
     private int dayOfYearFromApp, dayOfYearLast7Days;
     private LineChartView lineChartView;
     private ArrayList yAxisValues, axisValues;
+    private Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class ActivityMain extends AppCompatActivity {
         oneDayUsageTextView = (TextView) findViewById(R.id.oneDayUsageTextView);
         sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
         lineChartView = findViewById(R.id.chart);
+        logoutButton = (Button) findViewById(R.id.logoutButton);
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -168,6 +172,18 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().signOut();
+                Intent toActivityLogin = new Intent(ActivityMain.this, ActivityLogin.class);
+                toActivityLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(toActivityLogin);
+                finish();
             }
         });
     }
