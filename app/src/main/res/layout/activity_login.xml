@@ -1,88 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
     tools:context=".ActivityLogin">
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/emailEditTextActivityLogin"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Email"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <EditText
-        android:id="@+id/emailEditTextActivityLogin"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="text"
-        android:paddingRight="10dp"
-        android:textSize="20sp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp" />
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:background="@drawable/wasav"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"/>
 
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/passwordEditTextActivityLogin"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Password"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/emailEditTextActivityLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/background_edit_text_silver" />
 
-    <EditText
-        android:id="@+id/passwordEditTextActivityLogin"
+        <EditText
+            android:id="@+id/passwordEditTextActivityLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Password"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_edit_text_silver"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget Password?"
+            android:textColor="@color/teal"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            android:background="@drawable/background_button_blue"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/loginButtonActivityLogin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/silver"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp">
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign Up"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingRight="10dp"
-        android:textSize="20sp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp" />
-
-    <Button
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:text="Login"
-        android:id="@+id/loginButtonActivityLogin"/>
+        android:layout_height="150dp"
+        android:background="@drawable/wave"
+        android:layout_alignParentBottom="true"/>
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Register here"
-        android:id="@+id/registerHereTextViewActivityLogin"
-        android:layout_marginBottom="10dp"/>
+        android:text="Copyright Team I i-Caps 2019"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"/>
 
-</LinearLayout>
+</RelativeLayout>
