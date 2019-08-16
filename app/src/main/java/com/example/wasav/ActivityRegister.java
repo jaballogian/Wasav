@@ -38,10 +38,6 @@ public class ActivityRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //set font
-        Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, "PRODUCT_SANS.ttf", true);
-
         fullnameEditText = (EditText) findViewById(R.id.fullnameEditTextActivityRegister);
         phoneNumberEditText = (EditText) findViewById(R.id.phoneNumberEditTextActivityRegister);
         emailEditText = (EditText) findViewById(R.id.emailEditTextActivityRegister);

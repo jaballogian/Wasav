@@ -32,14 +32,9 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //set font
-        Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, "PRODUCT_SANS.ttf", true);
-
         emailEditText = (EditText) findViewById(R.id.emailEditTextActivityLogin);
         passwordEditText = (EditText) findViewById(R.id.passwordEditTextActivityLogin);
         loginButton = (Button) findViewById(R.id.loginButtonActivityLogin);
-        registerHereTextView = (TextView) findViewById(R.id.registerHereTextViewActivityLogin);
 
         loading = new ProgressDialog(this);
 

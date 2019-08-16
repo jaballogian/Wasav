@@ -65,10 +65,6 @@ public class ActivityMain extends AppCompatActivity {
         yAxisValues = new ArrayList();
         axisValues = new ArrayList();
 
-        //set font
-        Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, "PRODUCT_SANS.ttf", true);
-
         checkingUser();
 
         //get today date

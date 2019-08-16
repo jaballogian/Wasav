@@ -10,4 +10,8 @@
     <color name="steelblue">#3189ba</color>
     <color name="silver">#b6b6b6</color>
     <color name="teal">#266c86</color>
+    <color name="skyblue">#96d0df</color>
+    <color name="whitesmoke">#efefef</color>
+    <color name="cadetblue">#75a3b0</color>
+    <color name="powderblue">#bcdeea</color>
 </resources>
