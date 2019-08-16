@@ -1,148 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
     tools:context=".ActivityRegister">
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/fullnameEditTextActivityRegister"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Fullname"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"/>-->
-
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <EditText
-        android:id="@+id/fullnameEditTextActivityRegister"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Fullname"
-        android:inputType="text"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:background="@drawable/wasav"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"/>
 
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/phoneNumberEditTextActivityRegister"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Phone Number"-->
-            <!--android:inputType="number"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"/>-->
+        <EditText
+            android:id="@+id/fullnameEditTextActivityRegister"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Username"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/background_edit_text_silver"/>
 
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/emailEditTextActivityRegister"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/background_edit_text_silver"/>
 
-    <EditText
-        android:id="@+id/phoneNumberEditTextActivityRegister"
+        <EditText
+            android:id="@+id/passwordEditTextActivityRegister"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            android:background="@drawable/background_edit_text_silver" />
+
+        <EditText
+            android:id="@+id/verifyPasswordEditTextActivityRegister"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Verify Password"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/steelblue"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            android:background="@drawable/background_edit_text_silver" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerButtonActivityRegister"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:background="@drawable/background_button_blue"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/silver"
+                android:layout_centerInParent="true">
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Or"
+                android:textAlignment="center"
+                android:textColor="@color/silver"
+                android:textSize="20sp"
+                android:background="@color/white"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign up with"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:background="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/wave"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Phone Number"
-        android:inputType="number"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"/>
+        android:text="Copyright Team I i-Caps 2019"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"/>
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/emailEditTextActivityRegister"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Email"-->
-            <!--android:inputType="textEmailAddress"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"/>-->
-
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <EditText
-        android:id="@+id/emailEditTextActivityRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"/>
-
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<android.support.design.widget.TextInputEditText-->
-            <!--android:id="@+id/passwordEditTextActivityRegister"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Password"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:textSize="18sp" />-->
-
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <EditText
-        android:id="@+id/passwordEditTextActivityRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"
-        android:textSize="18sp" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerButtonActivityRegister"
-        android:text="Register"
-        android:textColor="@color/black"
-        android:padding="10dp"
-        android:textSize="16sp"/>
-
-</LinearLayout>
+</RelativeLayout>
