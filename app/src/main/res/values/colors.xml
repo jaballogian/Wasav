@@ -14,4 +14,8 @@
     <color name="whitesmoke">#efefef</color>
     <color name="cadetblue">#75a3b0</color>
     <color name="powderblue">#bcdeea</color>
+    <color name="mediumturqoise">#41c9cf</color>
+    <color name="gainsboro">#e6e6e6</color>
+    <color name="lightseagreen">#2499ca</color>
+    <color name="slategrey">#688a92</color>
 </resources>

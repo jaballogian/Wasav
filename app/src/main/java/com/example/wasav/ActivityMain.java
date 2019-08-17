@@ -45,11 +45,12 @@ public class ActivityMain extends AppCompatActivity {
     private ArrayList<String> timeStampArrayList;
     private ArrayList<Double> volumeArrayList;
     private String[] splitterMinus, splitterSlash;
-    private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays;
+    private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays, different;
 //    private LineChartView lineChartView;
     private ArrayList yAxisValues, axisValues;
     private Button detailButton;
     private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout, profileRelativeLayout, statisticRelativeLayout;
+    private Calendar newDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +190,8 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent toActivityDetail = new Intent(ActivityMain.this, ActivityDetail.class);
+                toActivityDetail.putExtra("oneDayVolume", oneDayValue);
+                toActivityDetail.putExtra("different", different);
                 startActivity(toActivityDetail);
             }
         });
@@ -196,7 +199,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void changeDay (int input){
 
-        Calendar newDate = Calendar.getInstance();
+        newDate = Calendar.getInstance();
         newDate.setTime(new Date());
 
         plusMinusDays = plusMinusDays + input;
@@ -263,7 +266,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void changeStatusDay(Calendar input){
 
-        int different = dayOfYearFromApp - input.get(Calendar.DAY_OF_YEAR);
+        different = dayOfYearFromApp - input.get(Calendar.DAY_OF_YEAR);
 
         if(different == 0){
 
