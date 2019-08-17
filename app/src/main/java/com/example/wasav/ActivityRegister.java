@@ -24,9 +24,9 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class ActivityRegister extends AppCompatActivity {
 
-    private EditText fullnameEditText, phoneNumberEditText, emailEditText, passwordEditText;
+    private EditText fullnameEditText, emailEditText, passwordEditText;
     private Button registerButton;
-    private String fullname, phoneNumber, email, password, uID;
+    private String fullname, email, password, uID;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
@@ -39,7 +39,6 @@ public class ActivityRegister extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         fullnameEditText = (EditText) findViewById(R.id.fullnameEditTextActivityRegister);
-        phoneNumberEditText = (EditText) findViewById(R.id.phoneNumberEditTextActivityRegister);
         emailEditText = (EditText) findViewById(R.id.emailEditTextActivityRegister);
         passwordEditText = (EditText) findViewById(R.id.passwordEditTextActivityRegister);
         registerButton = (Button) findViewById(R.id.registerButtonActivityRegister);
@@ -70,14 +69,13 @@ public class ActivityRegister extends AppCompatActivity {
     private void getStringFromEditText(){
 
         fullname = fullnameEditText.getText().toString();
-        phoneNumber = phoneNumberEditText.getText().toString();
         email = emailEditText.getText().toString();
         password = passwordEditText.getText().toString();
     }
 
     private void checkAllFields(){
 
-        if(fullname.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty()){
+        if(fullname.isEmpty() || email.isEmpty() || password.isEmpty()){
 
             Toast.makeText(ActivityRegister.this, "Please fill all the fields", Toast.LENGTH_LONG).show();
         }
@@ -120,7 +118,6 @@ public class ActivityRegister extends AppCompatActivity {
         userIdentity.put("fullname", fullname);
         userIdentity.put("email", email);
         userIdentity.put("password", password);
-        userIdentity.put("phonenumber", phoneNumber);
 
         databaseReference.setValue(userIdentity).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
