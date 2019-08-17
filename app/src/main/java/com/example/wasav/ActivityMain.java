@@ -252,6 +252,33 @@ public class ActivityMain extends AppCompatActivity {
         dateTextView.setText(newDay + " " + stringNewMonth);
 
         changeValueOneDay(newDate);
+        changeStatusDay(newDate);
+    }
+
+    private void changeStatusDay(Calendar input){
+
+        int different = dayOfYearFromApp - input.get(Calendar.DAY_OF_YEAR);
+
+        if(different == 0){
+
+            todayTextView.setText("Today");
+        }
+        else if(different == 1){
+
+            todayTextView.setText("Yesterday");
+        }
+        else if(different >= 2){
+
+            todayTextView.setText("Past");
+        }
+        else if(different == -1){
+
+            todayTextView.setText("Tomorrow");
+        }
+        else if(different <= -2){
+
+            todayTextView.setText("Future");
+        }
     }
 
     private void changeValueOneDay(Calendar input){
