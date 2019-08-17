@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,17 +38,19 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class ActivityMain extends AppCompatActivity {
 
-    private TextView oneDayUsageTextView, sevenDayUsageTextView;
+    private TextView oneDayUsageTextView, todayTextView, dateTextView, sevenDayUsageTextView;
     private DatabaseReference deviceReference;
     private Double oneDayValue, volume, lastSevenDaysVolume;
     private String timeStamp;
     private ArrayList<String> timeStampArrayList;
     private ArrayList<Double> volumeArrayList;
     private String[] splitterMinus, splitterSlash;
-    private int dayOfYearFromApp, dayOfYearLast7Days;
-    private LineChartView lineChartView;
+    private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays;
+//    private LineChartView lineChartView;
     private ArrayList yAxisValues, axisValues;
-    private Button logoutButton;
+//    private Button logoutButton;
+    private Button detailButton;
+    private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,14 @@ public class ActivityMain extends AppCompatActivity {
 
         //initializing
         oneDayUsageTextView = (TextView) findViewById(R.id.oneDayUsageTextView);
-        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
-        lineChartView = findViewById(R.id.chart);
-        logoutButton = (Button) findViewById(R.id.logoutButton);
+        detailButton = (Button) findViewById(R.id.detailButtonActivityMain);
+        todayTextView = (TextView) findViewById(R.id.todayTextViewActivityMain);
+        dateTextView = (TextView) findViewById(R.id.dateTextViewActivityMain);
+        minusDayRelativeLayout = (RelativeLayout) findViewById(R.id.minusDayRelativeLayoutActivityMain);
+        plusDayRelativeLayout =(RelativeLayout) findViewById(R.id.plusDayRelativeLayoutActivityMain);
+//        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
+//        lineChartView = findViewById(R.id.chart);
+//        logoutButton = (Button) findViewById(R.id.logoutButton);
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -68,14 +76,32 @@ public class ActivityMain extends AppCompatActivity {
         checkingUser();
 
         //get today date
-        Calendar now = Calendar.getInstance();
+        final Calendar now = Calendar.getInstance();
         dayOfYearFromApp = now.get(Calendar.DAY_OF_YEAR);
+        changeDay(0);
 
         //get last 7 days
         Calendar last7Days = Calendar.getInstance();
         last7Days.setTime(new Date());
         last7Days.add(Calendar.DAY_OF_YEAR, -7);
         dayOfYearLast7Days = last7Days.get(Calendar.DAY_OF_YEAR);
+
+        plusMinusDays = 0;
+        minusDayRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeDay(-1);
+            }
+        });
+
+        plusDayRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeDay(1);
+            }
+        });
 
         //get data from Firebase
         deviceReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("Wasav-001");
@@ -94,40 +120,9 @@ public class ActivityMain extends AppCompatActivity {
                     Log.d("testData", "time " + timeStamp + " volume " + volume);
                 }
 
-                oneDayValue = 0.0;
-                lastSevenDaysVolume = 0.0;
-                for(int i = 0; i < timeStampArrayList.size(); i++){
+                changeValueOneDay(now);
 
-                    //convert timeStamp from Firebase to date format
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd:MM:yyyy");
-                    Date d = null;
-                    try {
-                        d = formatter.parse(splitterDay(timeStampArrayList.get(i)) + ":" + splitterMonth(timeStampArrayList.get(i)) + ":" + splitterYear(timeStampArrayList.get(i)));
-                    } catch (ParseException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    Calendar convertedDate = Calendar.getInstance();
-                    convertedDate.setTime(d);
-                    int dayOfYearConvertedDate = convertedDate.get(Calendar.DAY_OF_YEAR);
-
-                    //compare
-                    if(dayOfYearConvertedDate == dayOfYearFromApp){
-
-                        oneDayValue = oneDayValue + volumeArrayList.get(i);
-                    }
-
-                    if(dayOfYearConvertedDate > dayOfYearLast7Days && dayOfYearConvertedDate <= dayOfYearFromApp){
-
-                        Log.d("compare", "dayOfYearLast7Days " + dayOfYearLast7Days + " dayOfYearConvertedDate " + dayOfYearConvertedDate + " dayOfYearFromApp " + dayOfYearFromApp);
-                        Log.d("testVolume", String.valueOf(volumeArrayList.get(i)));
-                        lastSevenDaysVolume = lastSevenDaysVolume + volumeArrayList.get(i);
-                    }
-
-                }
-                oneDayUsageTextView.setText(String.valueOf(oneDayValue));
-                sevenDayUsageTextView.setText(String.valueOf(lastSevenDaysVolume));
+//                sevenDayUsageTextView.setText(String.valueOf(lastSevenDaysVolume));
 
                 for (int i = 0; i < timeStampArrayList.size(); i++) {
                     axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + "/" + splitterMonth(timeStampArrayList.get(i)) + "/" + splitterYear(timeStampArrayList.get(i))));
@@ -157,11 +152,11 @@ public class ActivityMain extends AppCompatActivity {
                 yAxis.setTextSize(16);
                 data.setAxisYLeft(yAxis);
 
-                lineChartView.setLineChartData(data);
-                Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-                viewport.top = 110;
-                lineChartView.setMaximumViewport(viewport);
-                lineChartView.setCurrentViewport(viewport);
+//                lineChartView.setLineChartData(data);
+//                Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+//                viewport.top = 110;
+//                lineChartView.setMaximumViewport(viewport);
+//                lineChartView.setCurrentViewport(viewport);
 
             }
 
@@ -171,17 +166,129 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+//        logoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                FirebaseAuth.getInstance().signOut();
+//                Intent toActivityLogin = new Intent(ActivityMain.this, ActivityLogin.class);
+//                toActivityLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(toActivityLogin);
+//                finish();
+//            }
+//        });
+
+        detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FirebaseAuth.getInstance().signOut();
-                Intent toActivityLogin = new Intent(ActivityMain.this, ActivityLogin.class);
-                toActivityLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(toActivityLogin);
-                finish();
+                Intent toActivityDetail = new Intent(ActivityMain.this, ActivityDetail.class);
+                startActivity(toActivityDetail);
             }
         });
+    }
+
+    private void changeDay (int input){
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(new Date());
+
+        plusMinusDays = plusMinusDays + input;
+
+        newDate.add(Calendar.DAY_OF_YEAR, plusMinusDays);
+        int newDay = newDate.get(Calendar.DAY_OF_MONTH);
+        int newMonth = newDate.get(Calendar.MONTH) + 1;
+        String stringNewMonth = "";
+
+        if(newMonth == 1){
+
+            stringNewMonth = "Jan";
+        }
+        else if(newMonth == 2){
+
+            stringNewMonth = "Feb";
+        }
+        else if(newMonth == 3){
+
+            stringNewMonth = "Mar";
+        }
+        else if(newMonth == 4){
+
+            stringNewMonth = "Apr";
+        }
+        else if(newMonth == 5){
+
+            stringNewMonth = "May";
+        }
+        else if(newMonth == 6){
+
+            stringNewMonth = "Jun";
+        }
+        else if(newMonth == 7){
+
+            stringNewMonth = "Jul";
+        }
+        else if(newMonth == 8){
+
+            stringNewMonth = "Aug";
+        }
+        else if(newMonth == 9){
+
+            stringNewMonth = "Sep";
+        }
+        else if(newMonth == 10){
+
+            stringNewMonth = "Oct";
+        }
+        else if(newMonth == 11){
+
+            stringNewMonth = "Nov";
+        }
+        else if(newMonth == 12){
+
+            stringNewMonth = "Dec";
+        }
+
+        dateTextView.setText(newDay + " " + stringNewMonth);
+
+        changeValueOneDay(newDate);
+    }
+
+    private void changeValueOneDay(Calendar input){
+
+        oneDayValue = 0.0;
+        lastSevenDaysVolume = 0.0;
+        for(int i = 0; i < timeStampArrayList.size(); i++){
+
+            //convert timeStamp from Firebase to date format
+            SimpleDateFormat formatter = new SimpleDateFormat("dd:MM:yyyy");
+            Date d = null;
+            try {
+                d = formatter.parse(splitterDay(timeStampArrayList.get(i)) + ":" + splitterMonth(timeStampArrayList.get(i)) + ":" + splitterYear(timeStampArrayList.get(i)));
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            Calendar convertedDate = Calendar.getInstance();
+            convertedDate.setTime(d);
+            int dayOfYearConvertedDate = convertedDate.get(Calendar.DAY_OF_YEAR);
+
+            //compare
+            if(dayOfYearConvertedDate == input.get(Calendar.DAY_OF_YEAR)){
+
+                oneDayValue = oneDayValue + volumeArrayList.get(i);
+            }
+
+            if(dayOfYearConvertedDate > dayOfYearLast7Days && dayOfYearConvertedDate <= dayOfYearFromApp){
+
+                Log.d("compare", "dayOfYearLast7Days " + dayOfYearLast7Days + " dayOfYearConvertedDate " + dayOfYearConvertedDate + " dayOfYearFromApp " + dayOfYearFromApp);
+                Log.d("testVolume", String.valueOf(volumeArrayList.get(i)));
+                lastSevenDaysVolume = lastSevenDaysVolume + volumeArrayList.get(i);
+            }
+
+        }
+        oneDayUsageTextView.setText(String.valueOf(oneDayValue) + " L");
     }
 
     //get day from Firebase
