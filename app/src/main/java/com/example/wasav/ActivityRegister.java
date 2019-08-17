@@ -24,9 +24,9 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class ActivityRegister extends AppCompatActivity {
 
-    private EditText fullnameEditText, emailEditText, passwordEditText;
+    private EditText usernameEditText, emailEditText, passwordEditText, verifyPasswordEditText;
     private Button registerButton;
-    private String fullname, email, password, uID;
+    private String username, email, password, uID, verifiyPassword;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
@@ -38,10 +38,11 @@ public class ActivityRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        fullnameEditText = (EditText) findViewById(R.id.fullnameEditTextActivityRegister);
+        usernameEditText = (EditText) findViewById(R.id.usernameEditTextActivityRegister);
         emailEditText = (EditText) findViewById(R.id.emailEditTextActivityRegister);
         passwordEditText = (EditText) findViewById(R.id.passwordEditTextActivityRegister);
         registerButton = (Button) findViewById(R.id.registerButtonActivityRegister);
+        verifyPasswordEditText = (EditText) findViewById(R.id.verifyPasswordEditTextActivityRegister);
 
         loading = new ProgressDialog(this);
 
@@ -68,21 +69,29 @@ public class ActivityRegister extends AppCompatActivity {
 
     private void getStringFromEditText(){
 
-        fullname = fullnameEditText.getText().toString();
+        username = usernameEditText.getText().toString();
         email = emailEditText.getText().toString();
         password = passwordEditText.getText().toString();
+        verifiyPassword = verifyPasswordEditText.getText().toString();
     }
 
     private void checkAllFields(){
 
-        if(fullname.isEmpty() || email.isEmpty() || password.isEmpty()){
+        if(username.isEmpty() || email.isEmpty() || password.isEmpty() || verifiyPassword.isEmpty()){
 
             Toast.makeText(ActivityRegister.this, "Please fill all the fields", Toast.LENGTH_LONG).show();
         }
         else {
 
-            setProgressDialog();
-            registerUser();
+            if(password.equals(verifiyPassword)){
+
+                setProgressDialog();
+                registerUser();
+            }
+            else {
+
+                Toast.makeText(ActivityRegister.this, "Password and Verify Password don't match", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -115,7 +124,7 @@ public class ActivityRegister extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uID).child("Profile");
 
         userIdentity = new HashMap<>();
-        userIdentity.put("fullname", fullname);
+        userIdentity.put("username", username);
         userIdentity.put("email", email);
         userIdentity.put("password", password);
 

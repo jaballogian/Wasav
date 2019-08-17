@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ActivityDetail"></activity>
+        <activity android:name=".ActivityStatistic"></activity>
+        <activity android:name=".ActivityDetail" />
         <activity android:name=".ActivityProfile" />
         <activity android:name=".ActivityMain">
 

@@ -21,7 +21,7 @@
             android:layout_gravity="center_horizontal"/>
 
         <EditText
-            android:id="@+id/fullnameEditTextActivityRegister"
+            android:id="@+id/usernameEditTextActivityRegister"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Username"
@@ -121,7 +121,27 @@
             android:textSize="14sp"
             android:background="@color/white"
             android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/facebook"
+                android:layout_marginRight="20dp"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/twitter"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

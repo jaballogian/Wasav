@@ -48,9 +48,8 @@ public class ActivityMain extends AppCompatActivity {
     private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays;
 //    private LineChartView lineChartView;
     private ArrayList yAxisValues, axisValues;
-//    private Button logoutButton;
     private Button detailButton;
-    private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout;
+    private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout, profileRelativeLayout, statisticRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,10 @@ public class ActivityMain extends AppCompatActivity {
         dateTextView = (TextView) findViewById(R.id.dateTextViewActivityMain);
         minusDayRelativeLayout = (RelativeLayout) findViewById(R.id.minusDayRelativeLayoutActivityMain);
         plusDayRelativeLayout =(RelativeLayout) findViewById(R.id.plusDayRelativeLayoutActivityMain);
+        profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityMain);
+        statisticRelativeLayout = (RelativeLayout) findViewById(R.id.statisticRelativeLayoutActivityMain);
 //        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
 //        lineChartView = findViewById(R.id.chart);
-//        logoutButton = (Button) findViewById(R.id.logoutButton);
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -100,6 +100,24 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 changeDay(1);
+            }
+        });
+
+        profileRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toActivityProfile = new Intent(ActivityMain.this, ActivityProfile.class);
+                startActivity(toActivityProfile);
+            }
+        });
+
+        statisticRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toActivityStatistic = new Intent(ActivityMain.this, ActivityStatistic.class);
+                startActivity(toActivityStatistic);
             }
         });
 
@@ -165,18 +183,6 @@ public class ActivityMain extends AppCompatActivity {
 
             }
         });
-
-//        logoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FirebaseAuth.getInstance().signOut();
-//                Intent toActivityLogin = new Intent(ActivityMain.this, ActivityLogin.class);
-//                toActivityLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(toActivityLogin);
-//                finish();
-//            }
-//        });
 
         detailButton.setOnClickListener(new View.OnClickListener() {
             @Override

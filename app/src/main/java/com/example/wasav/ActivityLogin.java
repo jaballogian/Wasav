@@ -24,7 +24,7 @@ public class ActivityLogin extends AppCompatActivity {
     private Button loginButton;
     private String email, password;
     private FirebaseAuth mAuth;
-    private TextView registerHereTextView;
+    private TextView dontHaveAnAccountTextView;
     private ProgressDialog loading;
 
     @Override
@@ -35,6 +35,7 @@ public class ActivityLogin extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.emailEditTextActivityLogin);
         passwordEditText = (EditText) findViewById(R.id.passwordEditTextActivityLogin);
         loginButton = (Button) findViewById(R.id.loginButtonActivityLogin);
+        dontHaveAnAccountTextView = (TextView) findViewById(R.id.dontHaveAnAccountTextViewActivityLogin);
 
         loading = new ProgressDialog(this);
 
@@ -49,7 +50,7 @@ public class ActivityLogin extends AppCompatActivity {
             }
         });
 
-        registerHereTextView.setOnClickListener(new View.OnClickListener() {
+        dontHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

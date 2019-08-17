@@ -7,19 +7,6 @@
     android:background="@color/white"
     tools:context=".ActivityMain">
 
-    <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/logoutButton"-->
-        <!--android:text="Logout"/>-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/oneDayUsageTextView"-->
-        <!--android:textSize="18sp"-->
-        <!--android:textColor="@color/black"/>-->
-
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -232,7 +219,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:id="@+id/statisticRelativeLayoutActivityMain">
 
             <ImageView
                 android:layout_width="40dp"
@@ -260,7 +248,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:id="@+id/profileRelativeLayoutActivityMain">
 
             <ImageView
                 android:layout_width="40dp"
