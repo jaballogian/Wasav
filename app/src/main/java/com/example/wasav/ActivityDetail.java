@@ -33,23 +33,23 @@ public class ActivityDetail extends AppCompatActivity {
 
         if(input == 0){
 
-            dayTextView.setText("Today");
+            dayTextView.setText("Today's Usage");
         }
         else if(input == 1){
 
-            dayTextView.setText("Yesterday");
+            dayTextView.setText("Yesterday's Usage");
         }
         else if(input >= 2){
 
-            dayTextView.setText("Past");
+            dayTextView.setText("Past's Usage");
         }
         else if(input == -1){
 
-            dayTextView.setText("Tomorrow");
+            dayTextView.setText("Tomorrow's Usage");
         }
         else if(input <= -2){
 
-            dayTextView.setText("Future");
+            dayTextView.setText("Future's Usage");
         }
     }
 }

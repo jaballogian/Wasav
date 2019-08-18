@@ -127,6 +127,8 @@ public class ActivityRegister extends AppCompatActivity {
         userIdentity.put("username", username);
         userIdentity.put("email", email);
         userIdentity.put("password", password);
+        userIdentity.put("country", "country");
+        userIdentity.put("photo", "photo");
 
         databaseReference.setValue(userIdentity).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

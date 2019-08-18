@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Wasav</string>
+
+    <string name="Country">Country</string>
+    <string name="Indonesia">Indonesia</string>
+    <string name="South_Korea">South Korea</string>
+
+    <string-array name="select_country">
+        <item>@string/Country</item>
+        <item>@string/Indonesia</item>
+        <item>@string/South_Korea</item>
+    </string-array>
 </resources>
