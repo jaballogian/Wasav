@@ -7,6 +7,13 @@
     android:background="@drawable/background_splash_screen"
     tools:context=".ActivityDetail">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/wave"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -294,11 +301,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/wave"
-        android:layout_alignParentBottom="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:background="@drawable/wave"-->
+        <!--android:layout_alignParentBottom="true" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
