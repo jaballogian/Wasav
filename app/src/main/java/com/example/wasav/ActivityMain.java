@@ -46,7 +46,6 @@ public class ActivityMain extends AppCompatActivity {
     private ArrayList<Double> volumeArrayList, newVolumeArrayList;
     private String[] splitterMinus, splitterSlash;
     private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays, different;
-//    private LineChartView lineChartView;
     private ArrayList yAxisValues, axisValues;
     private Button detailButton;
     private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout, profileRelativeLayout, statisticRelativeLayout;
@@ -67,7 +66,6 @@ public class ActivityMain extends AppCompatActivity {
         profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityMain);
         statisticRelativeLayout = (RelativeLayout) findViewById(R.id.statisticRelativeLayoutActivityMain);
 //        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
-//        lineChartView = findViewById(R.id.chart);
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -119,6 +117,8 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent toActivityStatistic = new Intent(ActivityMain.this, ActivityStatistic.class);
+                toActivityStatistic.putExtra("timeStampArrayList", timeStampArrayList);
+                toActivityStatistic.putExtra("volumeArrayList", volumeArrayList);
                 startActivity(toActivityStatistic);
             }
         });
