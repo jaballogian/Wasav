@@ -196,7 +196,8 @@ public class ActivityProfile extends AppCompatActivity {
 
                 try{
 
-                    Picasso.get().load(dataSnapshot.child("photo").getValue().toString()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(photoCircleImageView);
+//                    Picasso.get().load(dataSnapshot.child("photo").getValue().toString()).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(photoCircleImageView);
+                    Picasso.get().load(dataSnapshot.child("photo").getValue().toString()).into(photoCircleImageView);
                 }
                 catch (Exception ex) {
 

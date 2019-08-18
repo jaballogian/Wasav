@@ -118,6 +118,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
+                    android:id="@+id/defaultTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -128,6 +129,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/fiveHundredsmLTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -138,6 +140,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/twoLTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -185,6 +188,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
+                    android:id="@+id/dishTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -195,6 +199,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/fruitTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -205,6 +210,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/vegetableTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -253,6 +259,7 @@
                 android:layout_marginBottom="50dp">
 
                 <TextView
+                    android:id="@+id/meatTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -263,6 +270,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/chickenTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"
@@ -273,6 +281,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/fishTextViewActivityDetail"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/background_downside_image"

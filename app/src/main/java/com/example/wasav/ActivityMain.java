@@ -41,9 +41,9 @@ public class ActivityMain extends AppCompatActivity {
     private TextView oneDayUsageTextView, todayTextView, dateTextView, sevenDayUsageTextView;
     private DatabaseReference deviceReference;
     private Double oneDayValue, volume, lastSevenDaysVolume;
-    private String timeStamp;
-    private ArrayList<String> timeStampArrayList;
-    private ArrayList<Double> volumeArrayList;
+    private String timeStamp, mode;
+    private ArrayList<String> timeStampArrayList, modeArrayList, newModeArrayList;
+    private ArrayList<Double> volumeArrayList, newVolumeArrayList;
     private String[] splitterMinus, splitterSlash;
     private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays, different;
 //    private LineChartView lineChartView;
@@ -71,6 +71,7 @@ public class ActivityMain extends AppCompatActivity {
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
+        modeArrayList = new ArrayList<String>();
         yAxisValues = new ArrayList();
         axisValues = new ArrayList();
 
@@ -133,10 +134,13 @@ public class ActivityMain extends AppCompatActivity {
                     timeStamp = ds.getKey();
                     timeStampArrayList.add(timeStamp);
 
-                    volume = (Double) ds.getValue();
+                    volume = (Double) ds.child("volume").getValue();
                     volumeArrayList.add(volume);
 
-                    Log.d("testData", "time " + timeStamp + " volume " + volume);
+                    mode = ds.child("mode").getValue().toString();
+                    modeArrayList.add(mode);
+
+                    Log.d("testData", "time " + timeStamp + " volume " + volume + " mode" + mode);
                 }
 
                 changeValueOneDay(now);
@@ -192,6 +196,8 @@ public class ActivityMain extends AppCompatActivity {
                 Intent toActivityDetail = new Intent(ActivityMain.this, ActivityDetail.class);
                 toActivityDetail.putExtra("oneDayVolume", oneDayValue);
                 toActivityDetail.putExtra("different", different);
+                toActivityDetail.putExtra("modeArrayList", newModeArrayList);
+                toActivityDetail.putExtra("volumeArrayList", newVolumeArrayList);
                 startActivity(toActivityDetail);
             }
         });
@@ -294,6 +300,10 @@ public class ActivityMain extends AppCompatActivity {
 
         oneDayValue = 0.0;
         lastSevenDaysVolume = 0.0;
+
+        newModeArrayList = new ArrayList<String>();
+        newVolumeArrayList = new ArrayList<Double>();
+
         for(int i = 0; i < timeStampArrayList.size(); i++){
 
             //convert timeStamp from Firebase to date format
@@ -314,6 +324,9 @@ public class ActivityMain extends AppCompatActivity {
             if(dayOfYearConvertedDate == input.get(Calendar.DAY_OF_YEAR)){
 
                 oneDayValue = oneDayValue + volumeArrayList.get(i);
+
+                newModeArrayList.add(modeArrayList.get(i));
+                newVolumeArrayList.add(volumeArrayList.get(i));
             }
 
             if(dayOfYearConvertedDate > dayOfYearLast7Days && dayOfYearConvertedDate <= dayOfYearFromApp){
