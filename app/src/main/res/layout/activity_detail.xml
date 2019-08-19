@@ -320,7 +320,7 @@
             android:layout_weight="1"
             android:layout_marginRight="2dp"
             android:background="@color/white"
-            android:id="@+id/statisticRelativeLayoutActivityProfile">
+            android:id="@+id/statisticRelativeLayoutActivityDetail">
 
             <ImageView
                 android:layout_width="40dp"
@@ -335,7 +335,7 @@
             android:layout_weight="1"
             android:layout_marginRight="2dp"
             android:background="@color/white"
-            android:id="@+id/homeRelativeLayoutActivityProfile">
+            android:id="@+id/homeRelativeLayoutActivityDetail">
 
             <ImageView
                 android:layout_width="40dp"
@@ -349,7 +349,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:id="@+id/profileRelativeLayoutActivityDetail">
 
             <ImageView
                 android:layout_width="40dp"

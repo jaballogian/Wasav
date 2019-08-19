@@ -87,7 +87,7 @@ public class ActivityDetail extends AppCompatActivity {
 
         for(int i = 0; i < modeArrayList.size(); i++){
 
-            if(modeArrayList.get(i).equals("default")){
+            if(modeArrayList.get(i).equals("hand wash")){
 
                 defaultValue = defaultValue + volumeArrayList.get(i);
             }
@@ -125,14 +125,14 @@ public class ActivityDetail extends AppCompatActivity {
             }
         }
 
-        defaultTextView.setText(defaultValue.toString());
-        fiveHundredsmLTextView.setText(fiveHundredsmLValue.toString());
-        twoLTextView.setText(twoLValue.toString());
-        dishTextView.setText(dishValue.toString());
-        fruitTextView.setText(fruitsValue.toString());
-        vegetableTextView.setText(vegetableValue.toString());
-        meatTextView.setText(meatValue.toString());
-        chickenTextView.setText(chickenValue.toString());
-        fishTextView.setText(fishValue.toString());
+        defaultTextView.setText(defaultValue.toString() + " L");
+        fiveHundredsmLTextView.setText(fiveHundredsmLValue.toString() + " L");
+        twoLTextView.setText(twoLValue.toString() + " L");
+        dishTextView.setText(dishValue.toString() + " L");
+        fruitTextView.setText(fruitsValue.toString() + " L");
+        vegetableTextView.setText(vegetableValue.toString() + " L");
+        meatTextView.setText(meatValue.toString() + " L");
+        chickenTextView.setText(chickenValue.toString() + " L");
+        fishTextView.setText(fishValue.toString() + " L");
     }
 }

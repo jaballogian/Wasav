@@ -18,8 +18,7 @@
         android:id="@+id/titleRelativeLayoutActivityStatistic"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
-        android:layout_marginBottom="20dp">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +58,7 @@
                 android:gravity="center"
                 android:textColor="@color/teal"
                 android:textSize="16sp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/background_text_view_skyblue"/>
 
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:id="@+id/leftRelativeLayoutActivityStatistic">
+                    android:id="@+id/minusRelativeLayoutActivityStatistic">
 
                     <ImageView
                         android:layout_width="40dp"
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:id="@+id/rightRelativeLayoutActivityStatistic">
+                    android:id="@+id/plusRelativeLayoutActivityStatistic">
 
                     <ImageView
                         android:layout_width="40dp"

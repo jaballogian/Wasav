@@ -46,7 +46,6 @@ public class ActivityMain extends AppCompatActivity {
     private ArrayList<Double> volumeArrayList, newVolumeArrayList;
     private String[] splitterMinus, splitterSlash;
     private int dayOfYearFromApp, dayOfYearLast7Days, plusMinusDays, different;
-    private ArrayList yAxisValues, axisValues;
     private Button detailButton;
     private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout, profileRelativeLayout, statisticRelativeLayout;
     private Calendar newDate;
@@ -70,8 +69,6 @@ public class ActivityMain extends AppCompatActivity {
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
         modeArrayList = new ArrayList<String>();
-        yAxisValues = new ArrayList();
-        axisValues = new ArrayList();
 
         checkingUser();
 
@@ -146,40 +143,6 @@ public class ActivityMain extends AppCompatActivity {
                 changeValueOneDay(now);
 
 //                sevenDayUsageTextView.setText(String.valueOf(lastSevenDaysVolume));
-
-                for (int i = 0; i < timeStampArrayList.size(); i++) {
-                    axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + "/" + splitterMonth(timeStampArrayList.get(i)) + "/" + splitterYear(timeStampArrayList.get(i))));
-                }
-
-                for (int i = 0; i < volumeArrayList.size(); i++) {
-                    yAxisValues.add(new PointValue(i, volumeArrayList.get(i).floatValue()));
-                }
-
-                Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-
-                List lines = new ArrayList();
-                lines.add(line);
-
-                LineChartData data = new LineChartData();
-                data.setLines(lines);
-
-                Axis axis = new Axis();
-                axis.setValues(axisValues);
-                axis.setTextSize(16);
-                axis.setTextColor(Color.parseColor("#03A9F4"));
-                data.setAxisXBottom(axis);
-
-                Axis yAxis = new Axis();
-                yAxis.setName("Volume in Liters");
-                yAxis.setTextColor(Color.parseColor("#03A9F4"));
-                yAxis.setTextSize(16);
-                data.setAxisYLeft(yAxis);
-
-//                lineChartView.setLineChartData(data);
-//                Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-//                viewport.top = 110;
-//                lineChartView.setMaximumViewport(viewport);
-//                lineChartView.setCurrentViewport(viewport);
 
             }
 

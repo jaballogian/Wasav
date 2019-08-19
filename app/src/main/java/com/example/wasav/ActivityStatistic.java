@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.Axis;
@@ -21,7 +24,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class ActivityStatistic extends AppCompatActivity {
 
-    private RelativeLayout homeRelativeLayout, profileRelativeLayout, leftRelativeLayout, rightRelativeLayout;
+    private RelativeLayout homeRelativeLayout, profileRelativeLayout, minusRelativeLayout, plusRelativeLayout;
     private TextView dateTextView, totalUsageTextView;
     private LineChartView lineChartView;
     private Bundle readDataFromActivityMain;
@@ -29,6 +32,8 @@ public class ActivityStatistic extends AppCompatActivity {
     private ArrayList yAxisValues, axisValues;
     private String[] splitterMinus, splitterSlash;
     private ArrayList<Double> volumeArrayList;
+    private int plusMinusWeeks;
+    private Calendar newDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,8 @@ public class ActivityStatistic extends AppCompatActivity {
 
         homeRelativeLayout = (RelativeLayout) findViewById(R.id.homeRelativeLayoutActivityStatistic);
         profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityStatistic);
-        leftRelativeLayout = (RelativeLayout) findViewById(R.id.leftRelativeLayoutActivityStatistic);
-        rightRelativeLayout = (RelativeLayout) findViewById(R.id.rightRelativeLayoutActivityStatistic);
+        minusRelativeLayout = (RelativeLayout) findViewById(R.id.minusRelativeLayoutActivityStatistic);
+        plusRelativeLayout = (RelativeLayout) findViewById(R.id.plusRelativeLayoutActivityStatistic);
         dateTextView = (TextView) findViewById(R.id.dateTextViewActivityStatistic);
         lineChartView = (LineChartView) findViewById(R.id.chartActvityStatistic);
         totalUsageTextView = (TextView) findViewById(R.id.totalUsageTextViewActivityStatistic);
@@ -52,6 +57,9 @@ public class ActivityStatistic extends AppCompatActivity {
 
         volumeArrayList = new ArrayList<Double>();
         volumeArrayList = (ArrayList<Double>) getIntent().getSerializableExtra("volumeArrayList");
+
+        plusMinusWeeks = 0;
+        changeWeek(0);
 
         for (int i = 0; i < timeStampArrayList.size(); i++) {
             axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + " " + convertMonth(Integer.parseInt(splitterMonth(timeStampArrayList.get(i))))));
@@ -102,6 +110,22 @@ public class ActivityStatistic extends AppCompatActivity {
 
                 Intent toActivityProfile = new Intent(ActivityStatistic.this, ActivityProfile.class);
                 startActivity(toActivityProfile);
+            }
+        });
+
+        minusRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeWeek(-1);
+            }
+        });
+
+        plusRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeWeek(1);
             }
         });
     }
@@ -269,5 +293,25 @@ public class ActivityStatistic extends AppCompatActivity {
         }
 
         return output;
+    }
+
+    private void changeWeek (int input){
+
+        newDate = Calendar.getInstance();
+        newDate.setTime(new Date());
+
+        plusMinusWeeks = plusMinusWeeks + input;
+
+        newDate.add(Calendar.WEEK_OF_YEAR, plusMinusWeeks);
+        int firstDate = newDate.get(Calendar.DAY_OF_MONTH) + 1 - newDate.get(Calendar.DAY_OF_WEEK);
+        int firstMonth = newDate.get(Calendar.MONTH) + 1;
+
+        newDate.add(Calendar.DAY_OF_YEAR, 7 - newDate.get(Calendar.DAY_OF_WEEK));
+        int lastDate = newDate.get(Calendar.DAY_OF_MONTH);
+        int lastMonth = newDate.get(Calendar.MONTH) + 1;
+
+        Log.d("testWeek", "firstDate " + firstDate + " firstMonth " + firstMonth + " lastDate " + lastDate + " lastMonth " + lastMonth);
+
+        dateTextView.setText(firstDate + " " + convertMonth(firstMonth) + " - " + lastDate + " " + convertMonth(lastMonth));
     }
 }
