@@ -3,6 +3,7 @@ package com.example.wasav;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,10 +27,10 @@ public class ActivityStatistic extends AppCompatActivity {
     private TextView dateTextView, totalUsageTextView;
     private LineChartView lineChartView;
     private Bundle readDataFromActivityMain;
-    private ArrayList<String> timeStampArrayList;
+    private ArrayList<String> timeStampArrayList, newtimeStampArrayList;
     private ArrayList yAxisValues, axisValues;
     private String[] splitterMinus, splitterSlash;
-    private ArrayList<Double> volumeArrayList;
+    private ArrayList<Double> volumeArrayList, newVolumeArrayList;
     private int plusMinusWeeks;
     private Calendar newDate;
 
@@ -50,48 +51,11 @@ public class ActivityStatistic extends AppCompatActivity {
         timeStampArrayList = new ArrayList<String>();
         timeStampArrayList = readDataFromActivityMain.getStringArrayList("timeStampArrayList");
 
-//        yAxisValues = new ArrayList();
-//        axisValues = new ArrayList();
-
         volumeArrayList = new ArrayList<Double>();
         volumeArrayList = (ArrayList<Double>) getIntent().getSerializableExtra("volumeArrayList");
 
         plusMinusWeeks = 0;
         changeWeek(0);
-
-//        for (int i = 0; i < timeStampArrayList.size(); i++) {
-//            axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + " " + convertMonth(Integer.parseInt(splitterMonth(timeStampArrayList.get(i))))));
-//        }
-//
-//        for (int i = 0; i < volumeArrayList.size(); i++) {
-//            yAxisValues.add(new PointValue(i, volumeArrayList.get(i).floatValue()));
-//        }
-//
-//        Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
-//
-//        List lines = new ArrayList();
-//        lines.add(line);
-//
-//        LineChartData data = new LineChartData();
-//        data.setLines(lines);
-//
-//        Axis axis = new Axis();
-//        axis.setValues(axisValues);
-//        axis.setTextSize(16);
-//        axis.setTextColor(getResources().getColor(R.color.darkgray));
-//        data.setAxisXBottom(axis);
-//
-//        Axis yAxis = new Axis();
-////        yAxis.setName("Volume in Liters");
-//        yAxis.setTextColor(getResources().getColor(R.color.darkgray));
-//        yAxis.setTextSize(16);
-//        data.setAxisYLeft(yAxis);
-//
-//        lineChartView.setLineChartData(data);
-//        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-////        viewport.top = 10;
-//        lineChartView.setMaximumViewport(viewport);
-//        lineChartView.setCurrentViewport(viewport);
 
         homeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,18 +291,71 @@ public class ActivityStatistic extends AppCompatActivity {
 
         }
 
+        newtimeStampArrayList = new ArrayList<String>();
+        newVolumeArrayList = new ArrayList<Double>();
+
         for (int i = 0; i <= 6; i++){
 
             newDate.add(Calendar.DAY_OF_YEAR, 1);
             int newDay = newDate.get(Calendar.DAY_OF_MONTH);
             int newMonth = newDate.get(Calendar.MONTH) + 1;
+            int newYear = newDate.get(Calendar.YEAR);
             axisValues.add(i, new AxisValue(i).setLabel(newDay + " " + convertMonth(newMonth)));
 
+            for(int j = 0; j < timeStampArrayList.size(); j++){
+
+                if(splitterDay(String.valueOf(timeStampArrayList.get(j))).equals(String.valueOf(newDay)) && splitterMonth(String.valueOf(timeStampArrayList.get(j))).equals(String.valueOf(newMonth))
+                        && splitterYear(String.valueOf(timeStampArrayList.get(j))).equals(String.valueOf(newYear))){
+
+                    newtimeStampArrayList.add(timeStampArrayList.get(j));
+                    newVolumeArrayList.add(volumeArrayList.get(j));
+                }
+            }
         }
 
+        for(int i = 0; i < newtimeStampArrayList.size(); i++){
+
+            if(i < newtimeStampArrayList.size() - 1 && splitterDay(String.valueOf(newtimeStampArrayList.get(i))).equals(splitterDay(String.valueOf(newtimeStampArrayList.get(i+1))))
+                    && splitterMonth(String.valueOf(newtimeStampArrayList.get(i))).equals(splitterMonth(String.valueOf(newtimeStampArrayList.get(i+1))))
+                    && splitterYear(String.valueOf(newtimeStampArrayList.get(i))).equals(splitterYear(String.valueOf(newtimeStampArrayList.get(i+1))))){
+
+                newtimeStampArrayList.set(i, newtimeStampArrayList.get(i));
+                newtimeStampArrayList.remove(i + 1);
+                newVolumeArrayList.set(i, newVolumeArrayList.get(i) + newVolumeArrayList.get(i+1));
+                newVolumeArrayList.remove(i + 1);
+            }
+        }
+
+        Log.d("newVolumeArrayList", newtimeStampArrayList + " " + String.valueOf(newVolumeArrayList));
+
         yAxisValues = new ArrayList();
+
+        newDate.add(Calendar.DAY_OF_YEAR, -7);
+
         for (int i = 0; i <= 6; i++) {
-            yAxisValues.add(new PointValue(i, i));
+
+            newDate.add(Calendar.DAY_OF_YEAR, 1);
+            int newDay = newDate.get(Calendar.DAY_OF_MONTH);
+            int newMonth = newDate.get(Calendar.MONTH) + 1;
+            int newYear = newDate.get(Calendar.YEAR);
+
+            boolean state = false;
+
+            for(int j = 0; j < newtimeStampArrayList.size(); j++){
+
+                if(splitterDay(newtimeStampArrayList.get(j)).equals(String.valueOf(newDay))
+                        && splitterMonth(newtimeStampArrayList.get(j)).equals(String.valueOf(newMonth))
+                        && splitterYear(newtimeStampArrayList.get(j)).equals(String.valueOf(newYear))){
+
+                    yAxisValues.add(new PointValue(i, newVolumeArrayList.get(j).floatValue()));
+                    state = true;
+                }
+            }
+
+            if (state == false){
+
+                yAxisValues.add(new PointValue(i, (float) 0.0));
+            }
         }
 
         Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
