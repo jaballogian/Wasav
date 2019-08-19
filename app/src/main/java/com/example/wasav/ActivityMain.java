@@ -1,5 +1,6 @@
 package com.example.wasav;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ public class ActivityMain extends AppCompatActivity {
     private Button detailButton;
     private RelativeLayout minusDayRelativeLayout, plusDayRelativeLayout, profileRelativeLayout, statisticRelativeLayout;
     private Calendar newDate;
+    private ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class ActivityMain extends AppCompatActivity {
         profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityMain);
         statisticRelativeLayout = (RelativeLayout) findViewById(R.id.statisticRelativeLayoutActivityMain);
 //        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
+
+        loading = new ProgressDialog(this);
 
         timeStampArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -120,6 +124,8 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
+        setProgressDialog();
+
         //get data from Firebase
         deviceReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("Wasav-001");
         deviceReference.addValueEventListener(new ValueEventListener() {
@@ -164,6 +170,14 @@ public class ActivityMain extends AppCompatActivity {
                 startActivity(toActivityDetail);
             }
         });
+    }
+
+    private void setProgressDialog(){
+
+        loading.setTitle("Processing");
+        loading.setMessage("Please wait");
+        loading.setCanceledOnTouchOutside(false);
+        loading.show();
     }
 
     private void changeDay (int input){
@@ -301,6 +315,8 @@ public class ActivityMain extends AppCompatActivity {
 
         }
         oneDayUsageTextView.setText(String.valueOf(oneDayValue) + " L");
+
+        loading.dismiss();
     }
 
     //get day from Firebase

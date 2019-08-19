@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -356,6 +357,21 @@ public class ActivityStatistic extends AppCompatActivity {
 
                 yAxisValues.add(new PointValue(i, (float) 0.0));
             }
+        }
+
+        Double totalUsage = 0.0;
+        for(int i = 0; i < newVolumeArrayList.size(); i++){
+
+            totalUsage = totalUsage + newVolumeArrayList.get(i);
+        }
+
+        if(totalUsage == 0.0){
+
+            totalUsageTextView.setText(String.valueOf(totalUsage) + " L");
+        }
+        else {
+
+            totalUsageTextView.setText(new DecimalFormat("#.0#").format(totalUsage) + " L");
         }
 
         Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
