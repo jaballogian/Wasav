@@ -312,28 +312,31 @@ public class ActivityStatistic extends AppCompatActivity {
         int endMonth = newDate.get(Calendar.MONTH) + 1;
         int endYear = newDate.get(Calendar.YEAR);
 
+        newDate.add(Calendar.WEEK_OF_YEAR, -1);
+        axisValues = new ArrayList();
+
         if(startDay == 0){
 
-            newDate.add(Calendar.WEEK_OF_YEAR, -1);
+            newDate.add(Calendar.WEEK_OF_YEAR, 0);
             startDay = newDate.get(Calendar.DAY_OF_MONTH) + 1;
             dateTextView.setText(startDay + " " + convertMonth(startMonth - 1) + " " + " - " + endDay + " " + convertMonth(endMonth) + " " );
         }
         else {
 
             dateTextView.setText(startDay + " " + convertMonth(startMonth) + " " + " - " + endDay + " " + convertMonth(endMonth) + " " );
-        }
 
-        axisValues = new ArrayList();
-        yAxisValues = new ArrayList();
+        }
 
         for (int i = 0; i <= 6; i++){
 
-            int newDay = newDate.get(Calendar.DAY_OF_MONTH) + i + 1 - newDate.get(Calendar.DAY_OF_WEEK);
+            newDate.add(Calendar.DAY_OF_YEAR, 1);
+            int newDay = newDate.get(Calendar.DAY_OF_MONTH);
             int newMonth = newDate.get(Calendar.MONTH) + 1;
             axisValues.add(i, new AxisValue(i).setLabel(newDay + " " + convertMonth(newMonth)));
 
         }
 
+        yAxisValues = new ArrayList();
         for (int i = 0; i <= 6; i++) {
             yAxisValues.add(new PointValue(i, i));
         }
