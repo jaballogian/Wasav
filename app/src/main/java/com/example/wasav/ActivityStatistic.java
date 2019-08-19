@@ -1,10 +1,8 @@
 package com.example.wasav;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,8 +50,8 @@ public class ActivityStatistic extends AppCompatActivity {
         timeStampArrayList = new ArrayList<String>();
         timeStampArrayList = readDataFromActivityMain.getStringArrayList("timeStampArrayList");
 
-        yAxisValues = new ArrayList();
-        axisValues = new ArrayList();
+//        yAxisValues = new ArrayList();
+//        axisValues = new ArrayList();
 
         volumeArrayList = new ArrayList<Double>();
         volumeArrayList = (ArrayList<Double>) getIntent().getSerializableExtra("volumeArrayList");
@@ -61,39 +59,39 @@ public class ActivityStatistic extends AppCompatActivity {
         plusMinusWeeks = 0;
         changeWeek(0);
 
-        for (int i = 0; i < timeStampArrayList.size(); i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + " " + convertMonth(Integer.parseInt(splitterMonth(timeStampArrayList.get(i))))));
-        }
-
-        for (int i = 0; i < volumeArrayList.size(); i++) {
-            yAxisValues.add(new PointValue(i, volumeArrayList.get(i).floatValue()));
-        }
-
-        Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
-
-        List lines = new ArrayList();
-        lines.add(line);
-
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-
-        Axis axis = new Axis();
-        axis.setValues(axisValues);
-        axis.setTextSize(16);
-        axis.setTextColor(getResources().getColor(R.color.darkgray));
-        data.setAxisXBottom(axis);
-
-        Axis yAxis = new Axis();
-//        yAxis.setName("Volume in Liters");
-        yAxis.setTextColor(getResources().getColor(R.color.darkgray));
-        yAxis.setTextSize(16);
-        data.setAxisYLeft(yAxis);
-
-        lineChartView.setLineChartData(data);
-        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-//        viewport.top = 10;
-        lineChartView.setMaximumViewport(viewport);
-        lineChartView.setCurrentViewport(viewport);
+//        for (int i = 0; i < timeStampArrayList.size(); i++) {
+//            axisValues.add(i, new AxisValue(i).setLabel(splitterDay(timeStampArrayList.get(i)) + " " + convertMonth(Integer.parseInt(splitterMonth(timeStampArrayList.get(i))))));
+//        }
+//
+//        for (int i = 0; i < volumeArrayList.size(); i++) {
+//            yAxisValues.add(new PointValue(i, volumeArrayList.get(i).floatValue()));
+//        }
+//
+//        Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
+//
+//        List lines = new ArrayList();
+//        lines.add(line);
+//
+//        LineChartData data = new LineChartData();
+//        data.setLines(lines);
+//
+//        Axis axis = new Axis();
+//        axis.setValues(axisValues);
+//        axis.setTextSize(16);
+//        axis.setTextColor(getResources().getColor(R.color.darkgray));
+//        data.setAxisXBottom(axis);
+//
+//        Axis yAxis = new Axis();
+////        yAxis.setName("Volume in Liters");
+//        yAxis.setTextColor(getResources().getColor(R.color.darkgray));
+//        yAxis.setTextSize(16);
+//        data.setAxisYLeft(yAxis);
+//
+//        lineChartView.setLineChartData(data);
+//        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+////        viewport.top = 10;
+//        lineChartView.setMaximumViewport(viewport);
+//        lineChartView.setCurrentViewport(viewport);
 
         homeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,15 +301,68 @@ public class ActivityStatistic extends AppCompatActivity {
         plusMinusWeeks = plusMinusWeeks + input;
 
         newDate.add(Calendar.WEEK_OF_YEAR, plusMinusWeeks);
-        int firstDate = newDate.get(Calendar.DAY_OF_MONTH) + 1 - newDate.get(Calendar.DAY_OF_WEEK);
-        int firstMonth = newDate.get(Calendar.MONTH) + 1;
+        int startDateOfYear = newDate.get(Calendar.DAY_OF_YEAR);
+        int startDay = newDate.get(Calendar.DAY_OF_MONTH) + 1 - newDate.get(Calendar.DAY_OF_WEEK);
+        int startMonth = newDate.get(Calendar.MONTH) + 1;
+        int startYear = newDate.get(Calendar.YEAR);
 
         newDate.add(Calendar.DAY_OF_YEAR, 7 - newDate.get(Calendar.DAY_OF_WEEK));
-        int lastDate = newDate.get(Calendar.DAY_OF_MONTH);
-        int lastMonth = newDate.get(Calendar.MONTH) + 1;
+        int endDateOfYear = newDate.get(Calendar.DAY_OF_YEAR);
+        int endDay = newDate.get(Calendar.DAY_OF_MONTH);
+        int endMonth = newDate.get(Calendar.MONTH) + 1;
+        int endYear = newDate.get(Calendar.YEAR);
 
-        Log.d("testWeek", "firstDate " + firstDate + " firstMonth " + firstMonth + " lastDate " + lastDate + " lastMonth " + lastMonth);
+        if(startDay == 0){
 
-        dateTextView.setText(firstDate + " " + convertMonth(firstMonth) + " - " + lastDate + " " + convertMonth(lastMonth));
+            newDate.add(Calendar.WEEK_OF_YEAR, -1);
+            startDay = newDate.get(Calendar.DAY_OF_MONTH) + 1;
+            dateTextView.setText(startDay + " " + convertMonth(startMonth - 1) + " " + " - " + endDay + " " + convertMonth(endMonth) + " " );
+        }
+        else {
+
+            dateTextView.setText(startDay + " " + convertMonth(startMonth) + " " + " - " + endDay + " " + convertMonth(endMonth) + " " );
+        }
+
+        axisValues = new ArrayList();
+        yAxisValues = new ArrayList();
+
+        for (int i = 0; i <= 6; i++){
+
+            int newDay = newDate.get(Calendar.DAY_OF_MONTH) + i + 1 - newDate.get(Calendar.DAY_OF_WEEK);
+            int newMonth = newDate.get(Calendar.MONTH) + 1;
+            axisValues.add(i, new AxisValue(i).setLabel(newDay + " " + convertMonth(newMonth)));
+
+        }
+
+        for (int i = 0; i <= 6; i++) {
+            yAxisValues.add(new PointValue(i, i));
+        }
+
+        Line line = new Line(yAxisValues).setColor(getResources().getColor(R.color.mediumturqoise));
+
+        List lines = new ArrayList();
+        lines.add(line);
+
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+
+        Axis axis = new Axis();
+        axis.setValues(axisValues);
+        axis.setTextSize(16);
+        axis.setTextColor(getResources().getColor(R.color.darkgray));
+        data.setAxisXBottom(axis);
+
+        Axis yAxis = new Axis();
+//        yAxis.setName("Volume in Liters");
+        yAxis.setTextColor(getResources().getColor(R.color.darkgray));
+        yAxis.setTextSize(16);
+        data.setAxisYLeft(yAxis);
+
+        lineChartView.setLineChartData(data);
+        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+//        viewport.top = 10;
+        lineChartView.setMaximumViewport(viewport);
+        lineChartView.setCurrentViewport(viewport);
+
     }
 }
