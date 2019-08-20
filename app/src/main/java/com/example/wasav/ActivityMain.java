@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class ActivityMain extends AppCompatActivity {
 
-    private TextView oneDayUsageTextView, todayTextView, dateTextView, sevenDayUsageTextView;
+    private TextView oneDayUsageTextView, todayTextView, dateTextView, sevenDayUsageTextView, saveTextView;
     private DatabaseReference deviceReference;
-    private Double oneDayValue, volume, lastSevenDaysVolume;
+    private Double oneDayValue, volume, lastSevenDaysVolume, yesterdayVolume, saving;
     private String timeStamp, mode;
     private ArrayList<String> timeStampArrayList, modeArrayList, newModeArrayList;
     private ArrayList<Double> volumeArrayList, newVolumeArrayList;
@@ -66,6 +67,7 @@ public class ActivityMain extends AppCompatActivity {
         plusDayRelativeLayout =(RelativeLayout) findViewById(R.id.plusDayRelativeLayoutActivityMain);
         profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityMain);
         statisticRelativeLayout = (RelativeLayout) findViewById(R.id.statisticRelativeLayoutActivityMain);
+        saveTextView = (TextView) findViewById(R.id.saveTextViewActivityMain);
 //        sevenDayUsageTextView = (TextView) findViewById(R.id.sevenDayUsageTextView);
 
         loading = new ProgressDialog(this);
@@ -281,6 +283,24 @@ public class ActivityMain extends AppCompatActivity {
         newModeArrayList = new ArrayList<String>();
         newVolumeArrayList = new ArrayList<Double>();
 
+//        Calendar today = Calendar.getInstance();
+//        today.setTime(new Date());
+//
+//        int todayDate = today.get(Calendar.DAY_OF_MONTH);
+//        int todayMonth = today.get(Calendar.MONTH) + 1;
+//        int todayYear = today.get(Calendar.YEAR);
+//
+//        Calendar yesterday = Calendar.getInstance();
+//        yesterday.setTime(new Date());
+//        yesterday.add(Calendar.DAY_OF_YEAR, -1);
+//
+//        int yesterdayDate = yesterday.get(Calendar.DAY_OF_MONTH);
+//        int yesterdayMonth = yesterday.get(Calendar.MONTH) + 1;
+//        int yesterdayYear = yesterday.get(Calendar.YEAR);
+
+        yesterdayVolume = 0.0;
+        saving = 0.0;
+
         for(int i = 0; i < timeStampArrayList.size(); i++){
 
             //convert timeStamp from Firebase to date format
@@ -313,8 +333,24 @@ public class ActivityMain extends AppCompatActivity {
                 lastSevenDaysVolume = lastSevenDaysVolume + volumeArrayList.get(i);
             }
 
+            if(dayOfYearConvertedDate == input.get(Calendar.DAY_OF_YEAR) - 1){
+
+                yesterdayVolume = yesterdayVolume + volumeArrayList.get(i);
+            }
+
+            oneDayUsageTextView.setText(String.valueOf(oneDayValue) + " L");
+
+            saving = (yesterdayVolume - oneDayValue) * 100 / yesterdayVolume;
+
+            if(yesterdayVolume == 0.0){
+
+                saveTextView.setText("-100 %");
+            }
+            else {
+
+                saveTextView.setText(new DecimalFormat("#.0#").format(saving) + " %");
+            }
         }
-        oneDayUsageTextView.setText(String.valueOf(oneDayValue) + " L");
 
         loading.dismiss();
     }
