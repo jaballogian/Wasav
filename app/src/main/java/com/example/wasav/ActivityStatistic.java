@@ -1,12 +1,20 @@
 package com.example.wasav;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,13 +35,14 @@ public class ActivityStatistic extends AppCompatActivity {
     private RelativeLayout homeRelativeLayout, profileRelativeLayout, minusRelativeLayout, plusRelativeLayout;
     private TextView dateTextView, totalUsageTextView;
     private LineChartView lineChartView;
-    private Bundle readDataFromActivityMain;
+//    private Bundle readDataFromActivityMain;
     private ArrayList<String> timeStampArrayList, newtimeStampArrayList;
     private ArrayList yAxisValues, axisValues;
     private String[] splitterMinus, splitterSlash;
     private ArrayList<Double> volumeArrayList, newVolumeArrayList;
     private int plusMinusWeeks;
     private Calendar newDate;
+    private DatabaseReference deviceReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +56,38 @@ public class ActivityStatistic extends AppCompatActivity {
         dateTextView = (TextView) findViewById(R.id.dateTextViewActivityStatistic);
         lineChartView = (LineChartView) findViewById(R.id.chartActvityStatistic);
         totalUsageTextView = (TextView) findViewById(R.id.totalUsageTextViewActivityStatistic);
-        readDataFromActivityMain = getIntent().getExtras();
+//        readDataFromActivityMain = getIntent().getExtras();
 
         timeStampArrayList = new ArrayList<String>();
-        timeStampArrayList = readDataFromActivityMain.getStringArrayList("timeStampArrayList");
+//        timeStampArrayList = readDataFromActivityMain.getStringArrayList("timeStampArrayList");
 
         volumeArrayList = new ArrayList<Double>();
-        volumeArrayList = (ArrayList<Double>) getIntent().getSerializableExtra("volumeArrayList");
+//        volumeArrayList = (ArrayList<Double>) getIntent().getSerializableExtra("volumeArrayList");
 
-        plusMinusWeeks = 0;
-        changeWeek(0);
+        deviceReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("Wasav-001");
+        deviceReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+//                    timeStamp = ds.getKey();
+                    timeStampArrayList.add(ds.getKey());
+
+//                    volume = (Double) ds.child("volume").getValue();
+                    volumeArrayList.add((Double) ds.child("volume").getValue());
+
+                }
+
+                plusMinusWeeks = 0;
+                changeWeek(0);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         homeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -399,6 +430,5 @@ public class ActivityStatistic extends AppCompatActivity {
 //        viewport.top = 10;
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
-
     }
 }

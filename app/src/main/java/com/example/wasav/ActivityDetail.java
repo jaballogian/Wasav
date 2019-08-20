@@ -1,8 +1,11 @@
 package com.example.wasav;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -17,6 +20,7 @@ public class ActivityDetail extends AppCompatActivity {
     private int different;
     private ArrayList<String> modeArrayList;
     private ArrayList<Double> volumeArrayList;
+    private RelativeLayout statisticRelativeLayout, homeRelativeLayout, profileRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,9 @@ public class ActivityDetail extends AppCompatActivity {
         meatTextView = (TextView) findViewById(R.id.meatTextViewActivityDetail);
         chickenTextView = (TextView) findViewById(R.id.chickenTextViewActivityDetail);
         fishTextView = (TextView) findViewById(R.id.fishTextViewActivityDetail);
+        statisticRelativeLayout = (RelativeLayout) findViewById(R.id.statisticRelativeLayoutActivityDetail);
+        homeRelativeLayout = (RelativeLayout) findViewById(R.id.homeRelativeLayoutActivityDetail);
+        profileRelativeLayout = (RelativeLayout) findViewById(R.id.profileRelativeLayoutActivityDetail);
 
         modeArrayList = new ArrayList<String>();
         volumeArrayList = new ArrayList<Double>();
@@ -57,6 +64,33 @@ public class ActivityDetail extends AppCompatActivity {
         oneDayVolumeTextView.setText(String.valueOf(oneDayVolume) + " L");
         changeStatusDay(different);
         popoulateMode();
+
+        statisticRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toActivityStatistic = new Intent(ActivityDetail.this, ActivityStatistic.class);
+                startActivity(toActivityStatistic);
+            }
+        });
+
+        homeRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toActivityHome = new Intent(ActivityDetail.this, ActivityMain.class);
+                startActivity(toActivityHome);
+            }
+        });
+
+        profileRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toActivityProfile = new Intent(ActivityDetail.this, ActivityProfile.class);
+                startActivity(toActivityProfile);
+            }
+        });
     }
 
     private void changeStatusDay(int input){

@@ -120,8 +120,8 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent toActivityStatistic = new Intent(ActivityMain.this, ActivityStatistic.class);
-                toActivityStatistic.putExtra("timeStampArrayList", timeStampArrayList);
-                toActivityStatistic.putExtra("volumeArrayList", volumeArrayList);
+//                toActivityStatistic.putExtra("timeStampArrayList", timeStampArrayList);
+//                toActivityStatistic.putExtra("volumeArrayList", volumeArrayList);
                 startActivity(toActivityStatistic);
             }
         });
@@ -282,21 +282,6 @@ public class ActivityMain extends AppCompatActivity {
 
         newModeArrayList = new ArrayList<String>();
         newVolumeArrayList = new ArrayList<Double>();
-
-//        Calendar today = Calendar.getInstance();
-//        today.setTime(new Date());
-//
-//        int todayDate = today.get(Calendar.DAY_OF_MONTH);
-//        int todayMonth = today.get(Calendar.MONTH) + 1;
-//        int todayYear = today.get(Calendar.YEAR);
-//
-//        Calendar yesterday = Calendar.getInstance();
-//        yesterday.setTime(new Date());
-//        yesterday.add(Calendar.DAY_OF_YEAR, -1);
-//
-//        int yesterdayDate = yesterday.get(Calendar.DAY_OF_MONTH);
-//        int yesterdayMonth = yesterday.get(Calendar.MONTH) + 1;
-//        int yesterdayYear = yesterday.get(Calendar.YEAR);
 
         yesterdayVolume = 0.0;
         saving = 0.0;
